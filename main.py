@@ -69,7 +69,19 @@ def compile_model(input_shape):
                 optimizer='adam',
                 metrics=['accuracy'])
     return model
-
+def test_model(input_shape):
+    model = tf.keras.models.Sequential([
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(512, activation=tf.nn.relu),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(2, activation=tf.nn.softmax)
+    ])
+    model.compile(optimizer='adam',
+                loss='sparse_categorical_crossentropy',
+                metrics=['accuracy'])
+    return model
+    
+    
 if __name__ == "__main__":
     IMG_SIZE = 48
 
@@ -97,6 +109,6 @@ if __name__ == "__main__":
         print('model already trained...')
     
     else:
-        model.fit(X, y, batch_size=32 ,epochs=3,validation_split=0.3)
+        model.fit(X, y, batch_size=32 ,epochs=10,validation_split=0.3)
         model.save('eye.h5')
 

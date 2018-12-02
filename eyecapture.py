@@ -36,7 +36,7 @@ while True:
         predictions = model.predict(img_pixels) 
         
         max_index = np.argmax(predictions[0])
-        
+        print(max_index)
         cv2.putText(frame, eye[int(max_index)], (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2)
 
 
