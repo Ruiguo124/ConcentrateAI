@@ -37,7 +37,7 @@ def data(IMG_SIZE):
     X = np.array(X,'float32')
     X /= 255
     print(X)
-    y = tf.keras.utils.to_categorical(y,num_classes=2)
+    #y = tf.keras.utils.to_categorical(y,num_classes=2)
     X= np.array(X).reshape(-1,IMG_SIZE,IMG_SIZE,1)
     
     pickle_out = open('X.pickle','wb')
@@ -51,18 +51,16 @@ def data(IMG_SIZE):
 def compile_model(input_shape):
     model = Sequential()
 
-    model.add(Conv2D(128, (3, 3), input_shape=input_shape,activation='relu'))
-    
+    model.add(Conv2D(64, (3, 3), input_shape=input_shape,activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    model.add(Conv2D(128, (3, 3),activation='relu'))
-    
+    model.add(Conv2D(64, (3, 3),activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
     model.add(Flatten())
     model.add(Dense(64,activation='relu'))
 
-    model.add(Dense(2))
+    model.add(Dense(1))
     model.add(Activation('sigmoid'))
 
     model.compile(loss='binary_crossentropy',
@@ -109,6 +107,6 @@ if __name__ == "__main__":
         print('model already trained...')
     
     else:
-        model.fit(X, y, batch_size=32 ,epochs=10,validation_split=0.3)
+        model.fit(X, y, batch_size=32 ,epochs=10,validation_split=0.1)
         model.save('eye.h5')
 
